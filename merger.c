@@ -33,9 +33,6 @@ static ts_merge_proc_t ts_merge_procs[] = {
 };
 
 static void ts_merge_proc_check(ts_merger_t *merger) {
-#ifdef _DEBUG 
-    //ts_segment_print(merger->engine->segment_active);
-#endif
     if (merger->merge_stage != 0) {
         return;
     }

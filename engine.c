@@ -186,6 +186,7 @@ static int ts_engine_lookup(ts_engine_t *engine, ts_lookup_request_t *request,
     return ERROR_CODE_SUCCESS;
 }
 
+#ifdef _DEBUG
 void ts_engine_print(ts_engine_t *engine) {
     printf("********* engine %p **********\n", engine);
     uint32_t count = 0;
@@ -198,4 +199,4 @@ void ts_engine_print(ts_engine_t *engine) {
         ts_segment_print(seg);
     }
 }
-
+#endif
