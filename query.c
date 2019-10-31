@@ -1,4 +1,5 @@
 #include "query.h"
+#include "memory.h"
 #include <strings.h>
 #include <assert.h>
 
@@ -28,14 +29,14 @@ void ts_lookup_request_destroy(ts_lookup_request_t *request) {
 }
 
 ts_lookup_request_t *ts_lookup_request_new() {
-    ts_lookup_request_t *request = malloc(sizeof(ts_lookup_request_t));
+    ts_lookup_request_t *request = ts_malloc(sizeof(ts_lookup_request_t));
     ts_lookup_request_init(request);
     return request;
 }
 
 void ts_lookup_request_free(ts_lookup_request_t *request) {
     ts_lookup_request_destroy(request);
-    free(request);
+    ts_free(request);
 }
 
 static int ts_lookup_response_append(

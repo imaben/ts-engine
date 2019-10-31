@@ -1,4 +1,5 @@
 #include "adapter.h"
+#include "memory.h"
 
 ts_document_t *ts_adapter_document(Document *document) {
     ts_document_t *newdoc = ts_document_new(NULL);
@@ -23,7 +24,7 @@ inline ts_net_packet_t *ts_adapter_response_operate_new(ErrorCode code, char *ms
     response.msg = msg;
     packet_size = response_operate__get_packed_size(&response);
     len = sizeof(uint32_t) + packet_size;
-    packet = malloc(sizeof(ts_net_packet_t) + len);
+    packet = ts_malloc(sizeof(ts_net_packet_t) + len);
     assert(packet != NULL);
     packet->len = len;
     packet->offset = 0;
@@ -56,11 +57,11 @@ Field *ts_adapter_field2proto(ts_field_t *field) {
 }
 
 Document *ts_adapter_document2proto(ts_document_t *document) {
-    Document *newdoc = malloc(sizeof(Document));
+    Document *newdoc = ts_malloc(sizeof(Document));
     document__init(newdoc);
     newdoc->pk = document->pk;
     newdoc->n_fields = HASH_COUNT(document->fields);
-    newdoc->fields = malloc(newdoc->n_fields * sizeof(Field *));
+    newdoc->fields = ts_malloc(newdoc->n_fields * sizeof(Field *));
     ts_field_t *field, *tmp;
     int i = 0;
     HASH_ITER(hh, document->fields, field, tmp) {
@@ -89,7 +90,7 @@ ts_net_packet_t *ts_adapter_response_lookup_new(ts_lookup_response_t *response, 
     }
     packet_size = response_lookup__get_packed_size(&newresp);
     len = sizeof(uint32_t) + packet_size;
-    packet = malloc(sizeof(ts_net_packet_t) + len);
+    packet = ts_malloc(sizeof(ts_net_packet_t) + len);
     assert(packet != NULL);
     packet->len = len;
     packet->offset = 0;
@@ -99,11 +100,11 @@ ts_net_packet_t *ts_adapter_response_lookup_new(ts_lookup_response_t *response, 
     // 此处再释放
     for (int i = 0; i < newresp.n_documents; i++) {
         for (int j = 0; j < newresp.documents[i]->n_fields; j++) {
-            free(newresp.documents[i]->fields[j]);
+            ts_free(newresp.documents[i]->fields[j]);
         }
-        free(newresp.documents[i]->fields);
+        ts_free(newresp.documents[i]->fields);
     }
-    free(newresp.documents);
+    ts_free(newresp.documents);
     return packet;
 }
 
