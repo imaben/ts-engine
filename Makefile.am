@@ -1,5 +1,5 @@
 AUTOMAKE_OPTIONS = subdir-objects
-OPTS=-Wno-implicit-function-declaration -Wno-format -Wno-pointer-sign
+OPTS=-Wno-implicit-function-declaration -Wno-format -Wno-pointer-sign -std=gnu9x -lpthread
 AM_CFLAGS=`pkg-config --cflags libprotobuf-c` $(OPTS)
 AM_LDFLAGS=`pkg-config --libs libprotobuf-c`
 bin_PROGRAMS=ts-engine
