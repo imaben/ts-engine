@@ -27,11 +27,12 @@ int main() {
         }
     }
     ts_bitmap_t deletion;
+    uint32_t total;
     ts_bitmap_init(&deletion);
     ts_bitmap_set(&deletion, 15);
     ts_bitmap_set(&deletion, 16);
     ts_docid_container_t *ids_list[2] = { &input1, &input2 };
-    ts_seek_intersect(ids_list, 2, &deletion, &out, 100);
+    ts_seek_intersect(ids_list, 2, &deletion, &out, 100, &total);
 
     ts_docid_t *tt;
     printf("===== input 1 =====\n");

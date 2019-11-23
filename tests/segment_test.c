@@ -44,7 +44,8 @@ int main() {
     utarray_new(tokens, &ut_str_icd);
     utarray_push_back(tokens, &k1);
     utarray_push_back(tokens, &k2);
-    ts_segment_lookup(seg, tokens, 10, &container);
+    uint32_t total;
+    ts_segment_lookup(seg, tokens, 10, &container, &total);
     printf("lookup, count:%d\n", container.total);
     utarray_free(tokens);
     ts_docid_t *docid;
