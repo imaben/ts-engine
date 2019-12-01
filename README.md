@@ -1,5 +1,7 @@
 # Tiny-Search Engine
 
+[![Build Status](https://travis-ci.org/imaben/ts-engine.svg?branch=master)](https://travis-ci.org/imaben/ts-engine)
+
 ## Build
 
 ```
