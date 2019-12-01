@@ -5,20 +5,14 @@ language:
 sudo: required
 dist: xenial
 
-addons:
-  apt:
-    packages:
-      - lcov
-      - valgrind
-
 env:
   global:
     - PROTOBUF_VERSION=3.7.1
     - PROTOBUF_C_VERSION=1.3.2
-    - PKG_CONFIG_PATH=$HOME/protobuf-$PROTOBUF_VERSION-bin/lib/pkgconfig;$HOME/protobuf-c-$PROTOBUF_C_VERSION-bin/lib/pkgconfig
+    - PKG_CONFIG_PATH=$HOME/protobuf-$PROTOBUF_VERSION-bin/lib/pkgconfig:$HOME/protobuf-c-$PROTOBUF_C_VERSION-bin/lib/pkgconfig
+    - C_INCLUDE_PATH=$HOME/protobuf-c-$PROTOBUF_C_VERSION-bin/include
 
 install:
-    - pip install --user cpp-coveralls
     - wget https://github.com/protocolbuffers/protobuf/archive/v$PROTOBUF_VERSION.tar.gz
     - tar xf v$PROTOBUF_VERSION.tar.gz
     - ( cd protobuf-$PROTOBUF_VERSION && ./autogen.sh && ./configure --prefix=$HOME/protobuf-$PROTOBUF_VERSION-bin && make -j2 && make install )
@@ -29,7 +23,4 @@ install:
 script:
     - ./autogen.sh
     - ./configure
-    - make -j2
-
-after_success:
-    - cpp-coveralls --build-root . --exclude t/ --exclude /usr/include --exclude protobuf-$PROTOBUF_VERSION --exclude protoc-c
+    - make
