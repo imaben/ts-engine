@@ -4,6 +4,7 @@
 #include <getopt.h>
 #include <string.h>
 #include <signal.h>
+#include <fcntl.h>
 #include "ts.h"
 #include "server.h"
 
@@ -63,6 +64,26 @@ static void ts_sighandler(int signal) {
     ts_server_shutdown();
 }
 
+static void daemonize() {
+    int fd;
+
+    if (fork() != 0) {
+        exit(0);
+    }
+
+    setsid();
+
+    if ((fd = open("/dev/null", O_RDWR, 0)) != -1) {
+        dup2(fd, STDIN_FILENO);
+        dup2(fd, STDOUT_FILENO);
+        dup2(fd, STDERR_FILENO);
+
+        if (fd > STDERR_FILENO) {
+            close(fd);
+        }
+    }
+}
+
 static void ts_signal_init() {
     sigset_t signal_mask;
     sigemptyset(&signal_mask);
@@ -87,6 +108,9 @@ int main(int argc, char **argv) {
     ts_parse_options(argc, argv);
     if (ts_setting->host == NULL || ts_setting->port == 0) {
         ts_usage();
+    }
+    if (ts_setting->daemon) {
+        daemonize();
     }
 
     ts_signal_init();
