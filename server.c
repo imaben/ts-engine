@@ -8,6 +8,7 @@
 #include "config.h"
 #include "net.h"
 #include "adapter.h"
+#include "memory.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <errno.h>

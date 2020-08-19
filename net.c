@@ -1,3 +1,4 @@
+#include "memory.h"
 #include "net.h"
 #include <stdlib.h>
 #include <assert.h>
