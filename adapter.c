@@ -43,7 +43,7 @@ ts_lookup_request_t *ts_adapter_request(RequestLookup *lookup) {
 }
 
 Field *ts_adapter_field2proto(ts_field_t *field) {
-    Field *newfield = calloc(1, sizeof(Field));
+    Field *newfield = ts_calloc(1, sizeof(Field));
     field__init(newfield);
     newfield->type = field->value_type;
     newfield->term = field->name;
@@ -82,7 +82,7 @@ ts_net_packet_t *ts_adapter_response_lookup_new(ts_lookup_response_t *response, 
     newresp.n_documents = utarray_len(response->docs);
     newresp.total = response->total;
     // 此处内存分配太频率，后期需要引入内存池来进行优化
-    newresp.documents = calloc(newresp.n_documents, sizeof(Document *));
+    newresp.documents = ts_calloc(newresp.n_documents, sizeof(Document *));
     ts_document_t **pp = NULL;
     int i = 0;
     while ((pp = (ts_document_t **)utarray_next(response->docs, pp))) {

@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 ts_connection_t *ts_connection_new(int sockfd) {
-    ts_connection_t *conn = calloc(1, sizeof(ts_connection_t));
+    ts_connection_t *conn = ts_calloc(1, sizeof(ts_connection_t));
     assert(conn != NULL);
     conn->sockfd = sockfd;
     conn->status = STATUS_WAIT_RECV;

@@ -96,7 +96,7 @@ static void ts_server_on_read_handler(aeEventLoop *el, int fd, void *args, int m
             // todo add log
             goto failed;
         }
-        ts_net_packet_t *packet = calloc(1, sizeof(ts_net_packet_t) + packet_len);
+        ts_net_packet_t *packet = ts_calloc(1, sizeof(ts_net_packet_t) + packet_len);
         assert(packet != NULL);
         packet->len = packet_len;
         conn->packet = packet;
