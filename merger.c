@@ -158,6 +158,7 @@ static void ts_segment_migrate(ts_segment_t *old, ts_segment_t *new, UT_array *d
             ts_segment_add_document(new, doc);
         }
     }
+    ts_bitmap_destroy(&deletion);
 }
 
 /**
