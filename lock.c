@@ -70,7 +70,11 @@ static int ts_spinlock_lock(ts_spinlock_t *lock) {
 
         for (n = 1; n < 129; n <<= 1) {
             for (i = 0; i < n; i++) {
+#if (defined(__APPLE__) && defined(__arm64__))
+                __asm__("yield");
+#else
                 __asm__("pause");
+#endif
             }
             if (lock->mutex == 0 && 
                     __sync_bool_compare_and_swap(&lock->mutex, 0, 1)) {
