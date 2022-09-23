@@ -54,6 +54,7 @@ int ts_server_start() {
     aeMain(ts_server->el);
 
     close(ts_server->fd);
+    aeDeleteEventLoop(ts_server->el);
     ts_engine_free(ts_server->engine);
     ts_threadpool_destroy(&ts_server->tp);
     return 0;
