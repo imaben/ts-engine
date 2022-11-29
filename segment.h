@@ -65,7 +65,7 @@ struct _ts_segment {
     /**
      * 当前段状态
      */
-    uint8_t state;
+    volatile uint8_t state;
 };
 typedef struct _ts_segment ts_segment_t;
 
