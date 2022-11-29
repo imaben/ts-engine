@@ -19,5 +19,6 @@ int ts_inverted_add_document(ts_inverted_t *inverted, ts_document_t *document) {
 
 void ts_inverted_free(ts_inverted_t *inverted) {
     ts_docid_container_destroy(&inverted->doc_ids);
+    ts_free(inverted->term);
     ts_free(inverted);
 }
